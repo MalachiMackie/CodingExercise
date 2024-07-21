@@ -4,7 +4,9 @@ public record GeneratePayslipRequest(
     string FirstName,
     string LastName,
     int AnnualSalary,
-    decimal SuperRatePercent);
+    decimal SuperRatePercent,
+    string MonthName,
+    int Year);
 
 public record GeneratePayslipResponse(
     DateOnly PayPeriodFrom,

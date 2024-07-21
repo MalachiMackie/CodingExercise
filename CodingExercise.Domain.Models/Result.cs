@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace CodingExercise.Domain.Models;
+﻿namespace CodingExercise.Domain.Models;
 
 public class Result
 {
@@ -28,6 +26,16 @@ public class Result
         return new Result<T>(value);
     }
 
+    public static Result Ok()
+    {
+        return new Result(true, null, []);
+    }
+
+    public static Result InvalidInput(IEnumerable<string> errors)
+    {
+        return new Result(false, Failure.InvalidInput, errors);
+    }
+
     public static Result<T> InvalidInput<T>(IEnumerable<string> errors)
     {
         return new Result<T>(Failure.InvalidInput, errors);
@@ -36,6 +44,16 @@ public class Result
     public static Result<T> Fail<T>(Failure failureType, IEnumerable<string> errors)
     {
         return new Result<T>(failureType, errors);
+    }
+    
+    public static Result<T> Fail<T>(Result result)
+    {
+        if (result.IsSuccess)
+        {
+            throw new InvalidOperationException("Expected a failed result");
+        }
+        
+        return new Result<T>(result.FailureType!.Value, result.Errors);
     }
 
     public static Result<T> NotFound<T>(IEnumerable<string> errors)

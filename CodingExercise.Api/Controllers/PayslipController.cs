@@ -21,18 +21,20 @@ public class PayslipController : CodingExerciseBaseController
     /// <param name="request"></param>
     /// <returns></returns>
     [HttpGet("generate")]
-    public ActionResult<GeneratePayslipResponse> GeneratePayslip([FromBody] GeneratePayslipRequest request)
+    public ActionResult<GeneratePayslipResponse> GeneratePayslip([FromQuery] GeneratePayslipRequest request)
     {
         var result = _payslipGeneratorService.GeneratePayslip(
             new IPayslipGeneratorService.EmployeeDetails(
                 request.FirstName,
                 request.LastName,
                 request.AnnualSalary,
-                request.SuperRatePercent));
+                request.SuperRatePercent),
+            request.MonthName,
+            request.Year);
 
         if (result.IsSuccess)
         {
-            return MapPayslip(result.Value);
+            return Ok(MapPayslip(result.Value));
         }
 
         return MapResultFailureToActionResult(result);

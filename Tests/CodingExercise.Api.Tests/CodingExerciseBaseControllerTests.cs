@@ -41,12 +41,9 @@ public class CodingExerciseBaseControllerTests
 
         var actionResult = _testController.MapResult(result);
 
-        actionResult.Should().BeStatusCodeResult()
-            .WithStatusCode(500);
-
         actionResult.Should().BeObjectResult()
-            .ValueAs<IEnumerable<string>>()
-            .Should().BeEquivalentTo(["Something bad happened"]);
+            .WithStatusCode(500)
+            .WithValueEquivalentTo(new [] {"Something bad happened"});
     }
 
     [Fact]
