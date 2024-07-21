@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingExercise.Domain.Model
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingExercise.Domain.Services.Tests", "Tests\CodingExercise.Domain.Services.Tests\CodingExercise.Domain.Services.Tests.csproj", "{AC1EE58B-7063-4245-B127-A295E17026CB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingExercise.IntegrationTests", "Tests\CodingExercise.IntegrationTests\CodingExercise.IntegrationTests.csproj", "{DCD23498-26DC-4AF3-B113-87B06082632C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,10 +46,15 @@ Global
 		{AC1EE58B-7063-4245-B127-A295E17026CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC1EE58B-7063-4245-B127-A295E17026CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC1EE58B-7063-4245-B127-A295E17026CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCD23498-26DC-4AF3-B113-87B06082632C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCD23498-26DC-4AF3-B113-87B06082632C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCD23498-26DC-4AF3-B113-87B06082632C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCD23498-26DC-4AF3-B113-87B06082632C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{95E59BEB-5020-4351-9DD3-ED88E7CB6389} = {BF7934D0-3E88-40FD-850B-ABF51B9143FA}
 		{DA360AF6-002F-4A5B-AD8F-505D9D9B8635} = {BF7934D0-3E88-40FD-850B-ABF51B9143FA}
 		{AC1EE58B-7063-4245-B127-A295E17026CB} = {BF7934D0-3E88-40FD-850B-ABF51B9143FA}
+		{DCD23498-26DC-4AF3-B113-87B06082632C} = {BF7934D0-3E88-40FD-850B-ABF51B9143FA}
 	EndGlobalSection
 EndGlobal

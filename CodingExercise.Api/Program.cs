@@ -24,3 +24,8 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
+
+// partial class for program so that IntegrationTests have a class to point against
+public partial class Program
+{
+}
