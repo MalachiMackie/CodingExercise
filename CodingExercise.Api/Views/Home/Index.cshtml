@@ -1,0 +1,59 @@
+@model CodingExercise.Api.ViewModels.GeneratePayslipViewModel
+@{
+    ViewData["Title"] = "Generate Payslip";
+}
+
+<h1>Generate Payslip</h1>
+
+<form asp-controller="Home" asp-action="Index" method="post">
+    <div style="display: grid; margin-bottom: 1rem; grid-template-columns: auto 1fr; grid-gap: 0.25rem">
+            @Html.LabelFor(x => x.FirstName)
+            @Html.TextBoxFor(x => x.FirstName)
+            @Html.LabelFor(x => x.LastName)
+            @Html.TextBoxFor(x => x.LastName)
+            @Html.LabelFor(x => x.AnnualSalary)
+            @Html.TextBoxFor(x => x.AnnualSalary)
+            @Html.LabelFor(x => x.SuperPercent)
+            @Html.TextBoxFor(x => x.SuperPercent)
+            @Html.LabelFor(x => x.Month)
+            @Html.DropDownListFor(x => x.Month, [
+                new SelectListItem("January", "January"),
+                new SelectListItem("February", "February"),
+                new SelectListItem("March", "March"),
+                new SelectListItem("April", "April"),
+                new SelectListItem("May", "May"),
+                new SelectListItem("June", "June"),
+                new SelectListItem("July", "July"),
+                new SelectListItem("August", "August"),
+                new SelectListItem("September", "September"),
+                new SelectListItem("October", "October"),
+                new SelectListItem("November", "November"),
+                new SelectListItem("December", "December"),
+            ])
+    </div>
+
+    @if (Model.Errors is { Count: > 0 })
+    {
+        <div style="color: red">
+            @foreach (var error in Model.Errors)
+            {
+                <div>@error</div>
+            }
+        </div>
+    }
+
+    <button type="submit">Generate Payslip</button>
+
+</form>
+
+@if (Model.Response is not null)
+{
+    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 0.25rem">
+        <span>Full Name: </span><span>@Model.Response.FullName</span>
+        <span>Payslip Period: </span><span>@Model.Response.PayPeriodFrom.ToString("MMMM dd") - @Model.Response.PayPeriodTo.ToString("MMMM dd")</span>
+        <span>Gross Income: </span><span>@Model.Response.GrossIncome.ToString("C")</span>
+        <span>Income Tax: </span><span>@Model.Response.IncomeTax.ToString("C")</span>
+        <span>Net Income: </span><span>@Model.Response.NetIncome.ToString("C")</span>
+        <span>Super: </span><span>@Model.Response.Super.ToString("C")</span>
+    </div>
+}

@@ -19,9 +19,9 @@ public class PayslipControllerTests
         _payslipController = new PayslipController(_payslipGeneratorService);
         A.CallTo(() => _payslipGeneratorService.GeneratePayslip(
             An<IPayslipGeneratorService.EmployeeDetails>._,
-            A<string>._,
-            An<int>._))
+            A<string>._))
             .Returns(Result.Ok(new IPayslipGeneratorService.GeneratedPayslip(
+                "John Doe",
                 DateRange.Create(
                     new DateOnly(2024, 07, 01),
                     new DateOnly(2024, 07, 31)).Value,
@@ -46,6 +46,7 @@ public class PayslipControllerTests
         result.Result.Should().BeOkObjectResult()
             .WithValueEquivalentTo(
                 new GeneratePayslipResponse(
+                    "John Doe",
                     new DateOnly(2024, 07, 01),
                     new DateOnly(2024, 07, 31),
                     1,
@@ -59,8 +60,7 @@ public class PayslipControllerTests
                 "LastName",
                 60_000,
                 25m),
-            "July",
-            2024))
+            "July"))
             .MustHaveHappened();
     }
 
@@ -69,8 +69,7 @@ public class PayslipControllerTests
     {
         A.CallTo(() => _payslipGeneratorService.GeneratePayslip(
                 An<IPayslipGeneratorService.EmployeeDetails>._,
-                A<string>._,
-                An<int>._))
+                A<string>._))
             .Returns(Result.NotFound<IPayslipGeneratorService.GeneratedPayslip>([]));
 
         var result = _payslipController.GeneratePayslip(

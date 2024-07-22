@@ -29,8 +29,7 @@ public class PayslipController : CodingExerciseBaseController
                 request.LastName,
                 request.AnnualSalary,
                 request.SuperRatePercent),
-            request.MonthName,
-            request.Year);
+            request.MonthName);
 
         if (result.IsSuccess)
         {
@@ -43,6 +42,7 @@ public class PayslipController : CodingExerciseBaseController
     private static GeneratePayslipResponse MapPayslip(IPayslipGeneratorService.GeneratedPayslip payslip)
     {
         return new GeneratePayslipResponse(
+            payslip.FullName,
             payslip.DateRange.From,
             payslip.DateRange.To,
             payslip.GrossIncome,

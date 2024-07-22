@@ -31,6 +31,7 @@ public class GeneratePayslipTests
         response.Should().BeSuccessful();
         var payslipResponse = await response.Content.ReadFromJsonAsync<GeneratePayslipResponse>();
         payslipResponse.Should().BeEquivalentTo(new GeneratePayslipResponse(
+            "Malachi Mackie",
             new DateOnly(2024, 03, 01),
             new DateOnly(2024, 03, 31),
             5004.17m,

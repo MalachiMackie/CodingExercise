@@ -6,8 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton(TimeProvider.System);
 
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPayslipGeneratorService, PayslipGeneratorService>();
 
 var app = builder.Build();
@@ -19,9 +20,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// enable for production:
+// app.UseHttpsRedirection();
 
 app.MapControllers();
+app.MapDefaultControllerRoute();
 
 app.Run();
 

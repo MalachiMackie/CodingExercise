@@ -12,9 +12,8 @@ public interface IPayslipGeneratorService
     /// </summary>
     /// <param name="employeeDetails"></param>
     /// <param name="monthName"></param>
-    /// <param name="year"></param>
     /// <returns></returns>
-    Result<GeneratedPayslip> GeneratePayslip(EmployeeDetails employeeDetails, string monthName, int year);
+    Result<GeneratedPayslip> GeneratePayslip(EmployeeDetails employeeDetails, string monthName);
 
     /// <summary>
     /// Employee Details used to generate a payslip
@@ -29,6 +28,7 @@ public interface IPayslipGeneratorService
     /// A generated payslip from an employee's details
     /// </summary>
     record GeneratedPayslip(
+        string FullName,
         DateRange DateRange,
         decimal GrossIncome,
         decimal IncomeTax,
@@ -38,10 +38,16 @@ public interface IPayslipGeneratorService
 
 public class PayslipGeneratorService : IPayslipGeneratorService
 {
+    private readonly TimeProvider _timeProvider;
+
+    public PayslipGeneratorService(TimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+    }
+
     public Result<GeneratedPayslip> GeneratePayslip(
         EmployeeDetails employeeDetails,
-        string monthName,
-        int year)
+        string monthName)
     {
         var validationResult = Validate(employeeDetails);
         if (validationResult.IsFailure)
@@ -49,7 +55,7 @@ public class PayslipGeneratorService : IPayslipGeneratorService
             return Result.Fail<GeneratedPayslip>(validationResult);
         }
         
-        var payPeriodRange = DateRange.FromMonthNameAndYear(monthName, year);
+        var payPeriodRange = DateRange.FromMonthNameAndYear(monthName, _timeProvider.GetLocalNow().Year);
         if (payPeriodRange.IsFailure)
         {
             return Result.Fail<GeneratedPayslip>(payPeriodRange);
@@ -63,6 +69,7 @@ public class PayslipGeneratorService : IPayslipGeneratorService
         var super = Math.Round(grossIncome * superMultiplier, 2);
         
         return Result.Ok(new GeneratedPayslip(
+            $"{employeeDetails.FirstName} {employeeDetails.LastName}",
             payPeriodRange.Value,
             grossIncome,
             monthlyIncomeTax,
@@ -86,7 +93,7 @@ public class PayslipGeneratorService : IPayslipGeneratorService
 
         if (employeeDetails.AnnualSalary <= 0)
         {
-            errors.Add("AnnualSalary must be greater than 0");
+            errors.Add("AnnualSalary must be greater than $0");
         }
 
         if (employeeDetails.SuperRatePercent < 0)

@@ -9,6 +9,7 @@ public record GeneratePayslipRequest(
     int Year);
 
 public record GeneratePayslipResponse(
+    string FullName,
     DateOnly PayPeriodFrom,
     DateOnly PayPeriodTo,
     decimal GrossIncome,
